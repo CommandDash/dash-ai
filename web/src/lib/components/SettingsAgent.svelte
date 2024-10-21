@@ -38,6 +38,16 @@
             return;
         }
 
+        let accessToken = localStorage.getItem("accessToken");
+
+        const headers = {
+            "Content-Type": "application/json",
+        };
+
+        if (accessToken && accessToken.length > 0) {
+            headers.Authorization = "Bearer " + accessToken;
+        }
+
         for (let field of formData) {
             const [key, value] = field;
 
@@ -57,9 +67,7 @@
         try {
             const response = await fetch(ACTION_URL, {
                 method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
+                headers: headers,
                 body: JSON.stringify(requestBody),
             });
 
